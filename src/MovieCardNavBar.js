@@ -33,7 +33,7 @@ const MovieCardHeading = ({allGenres}) => {
     const [popularMovies, setPopularMovies] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=6bf95fd3e703002112a61e3408d3491d&sort_by=popularity.desc`).then(response => {
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_URL}&sort_by=popularity.desc`).then(response => {
             setPopularMovies(response?.data?.results?.slice(0, 4));
             console.log(response?.data?.results);
         });

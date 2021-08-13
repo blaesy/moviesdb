@@ -117,12 +117,12 @@ const App = () => {
   const [currentItem, setCurrentItem] = React.useState({});
 
   React.useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=6bf95fd3e703002112a61e3408d3491d&page=${page}`).then(response => {
+    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_URL}&page=${page}`).then(response => {
       setMovies(response?.data?.results);
       console.log(response);
     });
 
-    axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=6bf95fd3e703002112a61e3408d3491d&language=en-US`).then((response) => {
+    axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_URL}&language=en-US`).then((response) => {
         setGenres(response?.data?.genres);
     })
   }, [])
@@ -130,25 +130,25 @@ const App = () => {
   const searchFor = async (search, id) => {
     switch(search) {
       case 'popular':
-        await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=6bf95fd3e703002112a61e3408d3491d`).then(response => {
+        await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_URL}`).then(response => {
           setMovies(response?.data?.results);
           setActiveId(1);
         });
         return;
       case 'upcoming':
-        await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=6bf95fd3e703002112a61e3408d3491d`).then(response => {
+        await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_URL}`).then(response => {
           setMovies(response?.data?.results);
           setActiveId(2);
         });
         return;
       case 'rating':
-        await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=6bf95fd3e703002112a61e3408d3491d`).then(response => {
+        await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_URL}`).then(response => {
           setMovies(response?.data?.results);
           setActiveId(3);
         });
         return;
       default: 
-        await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=6bf95fd3e703002112a61e3408d3491d`).then(response => {
+        await axios.get(`https://api.themoviedb.org/3/movie/popular?=?api_key${process.env.REACT_APP_API_URL}`).then(response => {
           setMovies(response?.data?.results);
           setActiveId(1);
         });

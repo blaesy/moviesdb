@@ -121,9 +121,9 @@ max-height: 90%;
 overflow: hidden;
 `;
 
-const MovieCard = ({height, name, image, genres, rating, allGenres, desc}) => {
+const MovieCard = ({height, name, image, genres, rating, allGenres, desc, onClick}) => {
     return (
-        <MainWrapper height={height}>
+        <MainWrapper height={height} onClick={onClick}>
             <MovieCardWrapper>
                 <MovieCardFront img={`https://image.tmdb.org/t/p/w780${image}`}>
                     <MovieFront>

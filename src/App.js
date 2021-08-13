@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import NavBar from './NavBar';
 import MoviesBody from './MoviesBody';
 import MovieCardHeading from './MovieCardNavBar';
+import MovieOverview from './MovieOverview';
 
 const AppWrapper = styled.div`
 width: 100%;
@@ -112,6 +113,8 @@ const App = () => {
   const [movies, setMovies] = React.useState([]);
   const [genres, setGenres] = React.useState([]);
   const [activeId, setActiveId] = React.useState(1);
+  const [openMovie, setOpenMovie] = React.useState(false);
+  const [currentItem, setCurrentItem] = React.useState({});
 
   React.useEffect(() => {
     axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=6bf95fd3e703002112a61e3408d3491d&page=${page}`).then(response => {
@@ -153,10 +156,14 @@ const App = () => {
     }
   }
 
-  console.log(movies);
+  const openMovieOveriew = (item) => {
+    setOpenMovie(true);
+    setCurrentItem(item);
+  }
 
   return (
     <AppWrapper>
+      <MovieOverview item={currentItem} active={openMovie} setActive={setOpenMovie} />
       <NavBar genres={genres}/>
       <MoviesBody />
       <MovieCardHeading allGenres={genres}/>
@@ -169,7 +176,7 @@ const App = () => {
             <ContentLeftFilter active={3 === activeId} onClick={() => searchFor('rating', 3)}>highest rating</ContentLeftFilter>
           </ContentLeftFiltersWrapper>
           <ContentLeftMoviesWrapper>
-            {movies?.map(item => <MovieCard desc={item?.overview} rating={item?.vote_average} height="400" name={item?.original_title} image={item?.poster_path}></MovieCard>)}
+            {movies?.map(item => <MovieCard onClick={() => openMovieOveriew(item)} desc={item?.overview} rating={item?.vote_average} height="400" name={item?.original_title} image={item?.poster_path}></MovieCard>)}
           </ContentLeftMoviesWrapper>
         </ContentLeft>
         <ContentRight></ContentRight>

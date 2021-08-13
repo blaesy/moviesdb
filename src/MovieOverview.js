@@ -1,5 +1,6 @@
+import React from 'react';
 import styled from 'styled-components';
-import {AiOutlineCaretLeft} from 'react-icons/ai';
+import {AiOutlineCaretLeft, AiOutlineStar, AiFillStar} from 'react-icons/ai';
 
 const Wrapper = styled.div`
 position: fixed;
@@ -87,6 +88,74 @@ z-index: 1;
     }
 }
 `;
+
+const ReviewOutline = styled.div`
+position: absolute;
+overflow: hidden;
+white-space: nowrap;
+width: 100%;
+z-index: 9;
+`;
+
+const ReviewOrange = styled.div`
+position: absolute;
+overflow: hidden;
+white-space: nowrap;
+width: ${props => props.rating * 10}%;
+z-index: 10;
+transition: width .1s linear;
+`;
+
+const ReviewWrapper = styled.div`
+position: relative;
+width: 125px;
+height: 25px;
+display: flex;
+margin: 0 auto;
+
+&:hover {
+    cursor: pointer;
+    & ${ReviewOrange} {
+        width: ${props => props.hoverWidth}%;
+    }
+}
+`;
+
+const OrangeStar = styled(AiFillStar)`
+width: 25px;
+height: 25px;
+color: orange;
+`;
+
+const WhiteStar = styled(AiOutlineStar)`
+width: 25px;
+height: 25px;
+color: white;
+`;
+
+const ReviewTextWrapper = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+width: 125px;
+margin: 0 auto 10px auto;
+`;
+
+const ReviewText = styled.div`
+
+font-size: 26px;
+&>span {
+    font-size: 14px;
+}
+`;
+
+const VotersCount = styled.div`
+
+font-size: 14px;
+width: 100%;
+text-align: center;
+`;
+
 // adult: false
 // backdrop_path: "/dq18nCTTLpy9PmtzZI6Y2yAgdw5.jpg"
 // genre_ids: [28, 12, 53, 878] (4)
@@ -103,7 +172,17 @@ z-index: 1;
 // vote_count: 4067
 
 const MovieOverview = ({item, active, setActive}) => {
-    console.log(item);
+
+    const [hoverWidth, setHoverWidth] = React.useState(0);
+
+    const showCords = (e) => {
+        setHoverWidth(
+            ((e.pageX - e.currentTarget.getBoundingClientRect().x)
+            /
+            (e.currentTarget.getBoundingClientRect().width)) * 100
+            ); 
+    }
+
     return (
         <Wrapper active={active}>
             <TopImage img={`https://image.tmdb.org/t/p/original${item.backdrop_path}`} />
@@ -113,7 +192,31 @@ const MovieOverview = ({item, active, setActive}) => {
                         <BottomTitle>{item?.original_title}</BottomTitle>
                         <BottomDescription>{item?.overview}</BottomDescription>
                     </BottomPanelLeft>
-                    <BottomPanelRight></BottomPanelRight>
+                    <BottomPanelRight>
+                        <ReviewTextWrapper>
+                            <div>RATING: </div>
+                            <ReviewText>{item?.vote_average}<span>/10</span></ReviewText>
+                        </ReviewTextWrapper>
+                        <ReviewWrapper onMouseMove={(e) => showCords(e)} hoverWidth={hoverWidth} >
+                            <ReviewOutline>
+                                <WhiteStar />
+                                <WhiteStar />
+                                <WhiteStar />
+                                <WhiteStar />
+                                <WhiteStar />
+                            </ReviewOutline>
+                            <ReviewOrange rating={item.vote_average}>
+                                <OrangeStar />
+                                <OrangeStar />
+                                <OrangeStar />
+                                <OrangeStar />
+                                <OrangeStar />
+                            </ReviewOrange>
+                        </ReviewWrapper>
+                        <ReviewTextWrapper>
+                            <VotersCount><span>VOTERS: {item?.vote_count}</span></VotersCount>
+                        </ReviewTextWrapper>
+                    </BottomPanelRight>
                 </BottomPanelInner>
             </BottomPanel>
             <GoBackArrowWrapper onClick={() => setActive(false)}>

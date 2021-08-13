@@ -5,3 +5,8 @@ In order for the website to fully work & load, you need to obtain *api_key* from
 ```
 REACT_APP_API_URL=[YOUR_KEY]
 ```
+
+### WORK IN PROGRESS
+- Genre/Categories Movies/Shows page
+- Searching & Filtering
+- Adding Reviews & Ratings

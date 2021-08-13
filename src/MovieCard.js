@@ -80,7 +80,7 @@ flex-wrap: wrap;
 flex-direction: row;
 `;
 
-const Genre = styled.div`
+export const Genre = styled.div`
 display: flex;
 height: 16px;
 align-items: center;

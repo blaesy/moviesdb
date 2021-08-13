@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {AiOutlineCaretLeft, AiOutlineStar, AiFillStar} from 'react-icons/ai';
+import {AiOutlineCaretLeft, AiOutlineStar, AiFillStar, AiOutlineStop} from 'react-icons/ai';
 
 const Wrapper = styled.div`
 position: fixed;
@@ -28,7 +28,7 @@ const BottomPanel = styled.div`
 position: absolute;
 bottom: 0;
 width: 100%;
-height: 300px;
+height: 200px;
 background: black;
 z-index: 1;
 box-shadow: 0 -10px 100px 100px black;
@@ -59,6 +59,8 @@ height: 100%;
 const BottomTitle = styled.div`
 font-size: 26px;
 margin-bottom: 8px;
+display: flex;
+font-weight: bold;
 `;
 
 const BottomDescription = styled.div`
@@ -156,6 +158,21 @@ width: 100%;
 text-align: center;
 `;
 
+const InnerTop = styled.div`
+display: flex;
+align-items: flex-end;
+width: 600px;
+height: 100%;
+margin: auto auto 0 auto;
+`;
+
+const PlusEighteen = styled.div`
+display: flex;
+align-items: center;
+font-size: 24px;
+color: red;
+font-weight: bold;
+`;
 // adult: false
 // backdrop_path: "/dq18nCTTLpy9PmtzZI6Y2yAgdw5.jpg"
 // genre_ids: [28, 12, 53, 878] (4)
@@ -185,11 +202,12 @@ const MovieOverview = ({item, active, setActive}) => {
 
     return (
         <Wrapper active={active}>
-            <TopImage img={`https://image.tmdb.org/t/p/original${item.backdrop_path}`} />
+            <TopImage img={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}>
+            </TopImage>
             <BottomPanel>
                 <BottomPanelInner>
                     <BottomPanelLeft>
-                        <BottomTitle>{item?.original_title}</BottomTitle>
+                        <BottomTitle>{item?.original_title}{item?.adult && <PlusEighteen>&nbsp;+18</PlusEighteen>}</BottomTitle>
                         <BottomDescription>{item?.overview}</BottomDescription>
                     </BottomPanelLeft>
                     <BottomPanelRight>
@@ -220,7 +238,7 @@ const MovieOverview = ({item, active, setActive}) => {
                 </BottomPanelInner>
             </BottomPanel>
             <GoBackArrowWrapper onClick={() => setActive(false)}>
-                <AiOutlineCaretLeft style={{color: 'rgba(200,200,200,1)', fontSize: '48px'}}/>
+                <AiOutlineCaretLeft style={{color: 'rgba(0,0,0,1)', fontSize: '48px'}}/>
             </GoBackArrowWrapper>
         </Wrapper>
     )

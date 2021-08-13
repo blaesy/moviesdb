@@ -166,7 +166,7 @@ const App = () => {
       <MovieOverview item={currentItem} active={openMovie} setActive={setOpenMovie} />
       <NavBar genres={genres}/>
       <MoviesBody />
-      <MovieCardHeading allGenres={genres}/>
+      <MovieCardHeading allGenres={genres} onClick={openMovieOveriew}/>
       <Content>
         <ContentLeft>
           <ContentLeftTitle>ALL MOVIES...</ContentLeftTitle>

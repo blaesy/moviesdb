@@ -28,7 +28,7 @@ grid-template-columns: 25% 25% 25% 25%;
   }
 `;
 
-const MovieCardHeading = ({allGenres}) => {
+const MovieCardHeading = ({allGenres, onClick}) => {
 
     const [popularMovies, setPopularMovies] = React.useState([]);
 
@@ -42,7 +42,7 @@ const MovieCardHeading = ({allGenres}) => {
     return (
         <Wrapper>
         {
-        popularMovies?.map(item => <MovieCard desc={item?.overview} allGenres={allGenres} genres={item?.genre_ids} rating={item?.vote_average} height="500" name={item?.original_title} image={item?.poster_path}></MovieCard>)
+        popularMovies?.map(item => <MovieCard item={item} onClick={() => onClick(item)} desc={item?.overview} allGenres={allGenres} genres={item?.genre_ids} rating={item?.vote_average} height="500" name={item?.original_title} image={item?.poster_path}></MovieCard>)
         }
         </Wrapper>
     )
